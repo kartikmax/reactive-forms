@@ -1,0 +1,8 @@
+.company-section,
+.access-section {
+  border: 1px solid #e0e4e8;
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
