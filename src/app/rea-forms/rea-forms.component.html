@@ -1,75 +1,67 @@
-<!-- rea-forms.component.html -->
-
-<div>
-  <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="form-row mt-3">
-      <div class="form-group col-md-6">
-        <label for="fromDate">From Date<span class="mandatory">*</span></label>
-
-        <div class="dashboard-date-input-container">
+<div class="container">
+  <div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div>
+        <mat-form-field class="dateMargin">
+          <mat-label>From Date<span class="mandatory">*</span></mat-label>
           <input
-            class="dateMargin"
             formControlName="fromDate"
             matInput
             [matDatepicker]="picker"
             placeholder="MM/DD/YYYY"
           />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
-          <mat-datepicker-toggle class="dateMargin1" matSuffix [for]="picker">
-          </mat-datepicker-toggle>
-          <mat-error *ngIf="form.get('fromDate')?.hasError('dateRangeError')">
-            From date should not exceed the to date
-          </mat-error>
-        </div>
+          <mat-error *ngIf="form.get('fromDate')?.hasError('required')">From Date is required</mat-error>
+          <mat-error *ngIf="form.get('fromDate')?.hasError('dateRangeError')">From date should not exceed the to date</mat-error>
+        </mat-form-field>
       </div>
-      <div class="col-md-6">
-        <label for="toDate">To Date<span class="mandatory">*</span></label>
-
-        <div class="dashboard-date-input-container">
+      <div>
+        <mat-form-field class="dateMargin">
+          <mat-label>To Date<span class="mandatory">*</span></mat-label>
           <input
-            class="dateMargin"
             formControlName="toDate"
             matInput
             [matDatepicker]="picker1"
             placeholder="MM/DD/YYYY"
           />
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
-          <mat-datepicker-toggle class="dateMargin2" matSuffix [for]="picker1">
-          </mat-datepicker-toggle>
-          <mat-error *ngIf="form.get('toDate')?.hasError('dateRangeError')">
-            To date should not be earlier than the from date
-          </mat-error>
+          <mat-error *ngIf="form.get('toDate')?.hasError('required')">To Date is required</mat-error>
+          <mat-error *ngIf="form.get('toDate')?.hasError('dateRangeError')">To date should not be earlier than the from date</mat-error>
+        </mat-form-field>
+      </div>
+      
+
+      <div>
+        <div>
+          <mat-form-field>
+            <mat-label>Destination<span class="mandatory">*</span></mat-label>
+            <input
+              formControlName="destination"
+              matInput
+              placeholder="Enter Destination"
+            />
+            <mat-error *ngIf="form.get('destination')?.hasError('required')">Destination is required</mat-error>
+            <mat-error *ngIf="form.get('destination')?.hasError('whitespace')">Destination cannot be only whitespace</mat-error>
+          </mat-form-field>
         </div>
       </div>
-    </div>
-    
-<div class="form-row mt-3">
-  <div class="form-group col-md-12">
-    <label for="destination">Destination<span class="mandatory">*</span></label>
-    <input
-      class="dateMargin"
-      formControlName="destination"
-      matInput
-      placeholder="Enter Destination"
-    />
-    <mat-error *ngIf="form.get('destination')?.touched && form.get('destination')?.hasError('required')">
-      Destination is required
-    </mat-error>
+
+      <div class="submit">
+        <button mat-raised-button color="primary" type="submit">Submit</button>
+      </div>
+    </form>
   </div>
-</div>
-    <div class="mt-3">
-      <button type="submit">Submit</button>
+  <div>
+    <h2>Output</h2>
+    <div *ngIf="output; else noOutput">
+      <p>From Date: {{ form.get('fromDate')?.value | date:'MM/dd/yyyy' }}</p>
+      <p>To Date: {{ form.get('toDate')?.value | date:'MM/dd/yyyy' }}</p>
+      <p>Destination: {{ form.get('destination')?.value }}</p>
     </div>
-  </form>
-</div>
-<div>
-  <h2>Output</h2>
-  <div *ngIf="output; else noOutput">
-    <p>From Date: {{ form.get('fromDate')?.value | date:'MM/dd/yyyy' }}</p>
-    <p>To Date: {{ form.get('toDate')?.value | date:'MM/dd/yyyy' }}</p>
-    <p>Destination: {{ form.get('destination')?.value }}</p>
+    <ng-template #noOutput>
+      <p>No output to display</p>
+    </ng-template>
   </div>
-  <ng-template #noOutput>
-    <p>No output to display</p>
-  </ng-template>
 </div>
