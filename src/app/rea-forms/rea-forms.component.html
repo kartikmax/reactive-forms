@@ -1,4 +1,5 @@
 <div class="container">
+  <mat-checkbox [(ngModel)]="disabled">Request International Access </mat-checkbox>
   <div>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div>
@@ -9,6 +10,7 @@
             matInput
             [matDatepicker]="picker"
             placeholder="MM/DD/YYYY"
+            [disabled]="disabled"
           />
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
@@ -24,6 +26,7 @@
             matInput
             [matDatepicker]="picker1"
             placeholder="MM/DD/YYYY"
+            [disabled]="disabled"
           />
           <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
           <mat-datepicker #picker1></mat-datepicker>
@@ -41,6 +44,7 @@
               formControlName="destination"
               matInput
               placeholder="Enter Destination"
+              [disabled]="disabled"
             />
             <mat-error *ngIf="form.get('destination')?.hasError('required')">Destination is required</mat-error>
             <mat-error *ngIf="form.get('destination')?.hasError('whitespace')">Destination cannot be only whitespace</mat-error>

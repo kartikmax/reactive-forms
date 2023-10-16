@@ -15,6 +15,7 @@ import { formatDate } from '@angular/common';
 export class ReaFormsComponent {
   form: FormGroup;
   output: string = '';
+  disabled: boolean = true;
 
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -29,7 +30,7 @@ export class ReaFormsComponent {
     this.form.get('fromDate')?.setErrors(null);
     this.form.get('toDate')?.setErrors(null);
     this.form.get('destination')?.setErrors(null);
-  
+
     // Check for empty fields and set errors accordingly
     if (this.form.get('fromDate')?.value === '') {
       this.form.get('fromDate')?.setErrors({ required: true });
@@ -40,29 +41,28 @@ export class ReaFormsComponent {
     if (this.form.get('destination')?.value === '') {
       this.form.get('destination')?.setErrors({ required: true });
     }
-  
+
     if (this.form.valid) {
       const fromDate = this.form.get('fromDate')?.value;
       const toDate = this.form.get('toDate')?.value;
-  
+
       if (fromDate > toDate) {
         this.form.get('toDate')?.setErrors({ dateRangeError: true });
       } else {
         // Format dates to 'MM/DD/YYYY'
         const formattedFromDate = formatDate(fromDate, 'MM/dd/yyyy', 'en-US');
         const formattedToDate = formatDate(toDate, 'MM/dd/yyyy', 'en-US');
-  
+
         this.output = `From Date: ${formattedFromDate}, To Date: ${formattedToDate}, Destination: ${
           this.form.get('destination')?.value
         }`;
-  
+
         // Log formatted dates in the console
         console.log('From Date (formatted):', formattedFromDate);
         console.log('To Date (formatted):', formattedToDate);
       }
     }
   }
-  
 
   noWhitespaceValidator(
     control: AbstractControl
